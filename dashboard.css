@@ -1,0 +1,684 @@
+```css html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    height: 100%;
+    overflow: hidden;
+    /* Prevent global scroll */
+}
+
+#dashboard-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* Allow internal scrolling */
+    padding: 20px;
+    box-sizing: border-box;
+    background-image: radial-gradient(#ccc 1px, transparent 1px);
+    background-size: 20px 20px;
+    /* Set density to 10px */
+}
+
+/* Banner Styles */
+#dashboard-header {
+    position: relative;
+    height: 120px;
+    /* Reduced from 200px */
+    background-color: #fff;
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+/* Old zoom styles removed */
+
+#dashboard-header.has-banner {
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    z-index: 2;
+}
+
+#dashboard-title {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+    border-bottom: 2px solid transparent;
+    cursor: text;
+}
+
+#dashboard-title:focus {
+    outline: none;
+    border-bottom-color: rgba(255, 255, 255, 0.5);
+}
+
+.header-controls {
+    display: flex;
+    gap: 10px;
+    position: relative;
+    align-items: center;
+}
+
+#cover-options {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 10px;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    z-index: 10;
+}
+
+.preset-swatch {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    /* Prevent squeezing */
+    flex-shrink: 0;
+    /* Prevent squeezing */
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s;
+}
+
+.preset-swatch:hover {
+    transform: scale(1.1);
+}
+
+#upload-cover-btn {
+    background: #f0f2f5;
+    color: #333;
+    font-size: 12px;
+    padding: 6px 12px;
+}
+
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    background-color: #007bff;
+    color: white;
+    font-size: 14px;
+    transition: background-color 0.2s, opacity 0.2s, transform 0.1s;
+    min-width: 80px;
+    /* Ensure buttons have similar width */
+    text-align: center;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#edit-btn {
+    background-color: rgba(0, 123, 255, 0.1);
+    /* Very subtle blue background */
+    color: #007bff;
+    /* Blue text */
+    opacity: 0.7;
+}
+
+#edit-btn:hover {
+    background-color: #007bff;
+    /* Full blue background */
+    color: white;
+    /* White text */
+    opacity: 1;
+}
+
+#e.delete-btn:hover {
+    background-color: #e0e0e0;
+    /* Light gray background */
+    color: #333;
+    /* Darker icon */
+}
+
+.invert-btn {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    border-radius: 50%;
+}
+
+.invert-btn:hover {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+/* Force Inverted Filter */
+.widget.force-inverted iframe {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+#edit-mode-btn {
+    background: transparent;
+    color: #333;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#edit-mode-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+#clear-all-btn {
+    background-color: #ff4444;
+    color: white;
+    box-shadow: 0 2px 4px rgba(255, 68, 68, 0.3);
+}
+
+/* Clear All is now in settings, so we don't need the header button styles */
+#clear-all-btn:hover {
+    background: #ff2222 !important;
+    /* Force red on hover */
+}
+
+#change-cover-btn {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    display: none;
+    /* Hidden by default */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-mode #change-cover-btn {
+    display: block;
+}
+
+.edit-mode #clear-all-btn {
+    display: block;
+}
+
+.edit-mode #dashboard-container {
+    background-image: radial-gradient(#ccc 1px, transparent 1px);
+    background-size: 20px 20px;
+    /* Grid dots 10px density */
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+}
+
+.widget {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 400px;
+    min-width: 50px;
+    min-height: 50px;
+    /* resize: both; Moved to .edit-mode .widget */
+    position: relative;
+    transition: box-shadow 0.2s;
+}
+
+.edit-mode .widget {
+    overflow: visible;
+    /* resize: both; Removed to use custom handle */
+}
+
+.resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    cursor: nwse-resize;
+    display: none;
+    z-index: 20;
+    /* Visual indicator: a small triangle */
+    background: linear-gradient(135deg, transparent 50%, #999 50%);
+    border-radius: 0 0 8px 0;
+}
+
+.edit-mode .resize-handle {
+    display: block;
+}
+
+.edit-mode .resize-handle:hover {
+    background: linear-gradient(135deg, transparent 50%, #007bff 50%);
+}
+
+.widget:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.widget-header {
+    height: 30px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    display: none;
+    /* Hidden by default */
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    /* Remove padding to let button hit edges if needed, or keep small padding */
+    padding-left: 10px;
+    /* Keep left padding for title */
+    padding-right: 10px;
+    /* Right padding for close button spacing */
+    font-size: 12px;
+    color: #666;
+    cursor: grab;
+    opacity: 0.5;
+    /* 50% transparency */
+    transition: opacity 0.2s;
+}
+
+.widget-header:hover {
+    opacity: 1;
+}
+
+.edit-mode .widget-header {
+    display: flex;
+    position: absolute;
+    top: -32px;
+    /* Move up outside the box */
+    left: -1px;
+    /* Align with border if needed, or 0 */
+    right: -1px;
+    height: 30px;
+    z-index: 100;
+    background: #fff;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px 8px 0 0;
+    border: 1px solid #eee;
+    border-bottom: none;
+}
+
+/* ... */
+
+.widget-zoom-controls {
+    position: absolute;
+    bottom: 10px;
+    right: 30px;
+    display: none;
+    flex-direction: column;
+    /* Vertical stack */
+    gap: 8px;
+    /* Gap between circles */
+    z-index: 20;
+    background: transparent;
+    /* No container background */
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    /* No container shadow */
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    border: none;
+}
+
+.widget-zoom-controls:hover {
+    opacity: 1;
+}
+
+.edit-mode .widget-zoom-controls {
+    display: flex;
+}
+
+.zoom-btn {
+    background: white;
+    border: 1px solid #ddd;
+    color: #666;
+    cursor: pointer;
+    font-size: 16px;
+    width: 26px;
+    /* 26px size */
+    height: 26px;
+    min-width: 0;
+    /* Override global button min-width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    transition: all 0.2s;
+    border-radius: 50%;
+    /* Circle */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.zoom-btn:first-child {
+    border-radius: 50%;
+    border-bottom: 1px solid #ddd;
+}
+
+.zoom-btn:last-child {
+    border-radius: 50%;
+}
+
+.zoom-btn:hover {
+    background: #f5f5f5;
+    color: #333;
+    transform: scale(1.1);
+}
+
+.widget-header:active {
+    cursor: grabbing;
+}
+
+.widget-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80%;
+    pointer-events: none;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    min-width: 0;
+    /* Override global button min-width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.delete-btn:hover {
+    color: #ff4444;
+}
+
+.widget-content {
+    flex: 1;
+    background: #f9f9f9;
+    position: relative;
+    /* Ensure panner is relative to this */
+}
+
+.content-panner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    /* Above iframe */
+    display: none;
+    /* Hidden by default */
+}
+
+.edit-mode .content-panner {
+    display: block;
+    cursor: all-scroll;
+    background: rgba(0, 0, 0, 0.05);
+    /* Slight tint to show it's interactive */
+}
+
+/* Help Button */
+#help-btn {
+    position: fixed;
+    bottom: 90px;
+    /* Moved up */
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    min-width: 0;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    color: #666;
+    font-size: 24px;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background-color 0.2s, opacity 0.2s;
+    opacity: 0.5;
+}
+
+#settings-btn {
+    position: fixed;
+    bottom: 30px;
+    /* Below help button */
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    min-width: 0;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    color: #666;
+    font-size: 24px;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background-color 0.2s, opacity 0.2s;
+    opacity: 0.5;
+}
+
+#help-btn:hover,
+#settings-btn:hover {
+    background-color: #d0d0d0;
+    /* Slightly darker on hover */
+    color: #333;
+    transform: scale(1.1);
+    opacity: 1;
+    /* Full prominence on hover */
+}
+
+.edit-mode #help-btn,
+.edit-mode #settings-btn {
+    display: flex;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 0;
+    border-radius: 8px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+    padding: 0;
+    min-width: auto;
+}
+
+.close-modal:hover {
+    color: #333;
+}
+
+.modal-body {
+    padding: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.modal-body ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 0;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode #dashboard-container {
+    /* Fainter dots for dark mode: white with low opacity */
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+}
+
+body.dark-mode .widget-header {
+    background: #333;
+    border-bottom: 1px solid #444;
+    color: #e0e0e0;
+}
+
+body.dark-mode .widget-header .widget-title {
+    color: #e0e0e0;
+}
+
+body.dark-mode .edit-mode .widget-header {
+    background: #333;
+    border: 1px solid #444;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .widget-content {
+    background: #000;
+}
+
+/* The requested filter for iframes */
+body.dark-mode .widget iframe {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+/* XOR Logic: If both Global Dark Mode AND Per-Widget Invert are active, cancel the filter.
+   This allows the user to "un-invert" a specific widget while in Dark Mode. */
+body.dark-mode .widget.force-inverted iframe {
+    filter: none;
+}
+
+body.dark-mode .modal-content {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+}
+
+body.dark-mode .modal-header {
+    border-bottom: 1px solid #444;
+}
+
+body.dark-mode .modal-header h2 {
+    color: #e0e0e0;
+}
+
+body.dark-mode .modal-body {
+    color: #ccc;
+}
+
+body.dark-mode #help-btn,
+body.dark-mode #settings-btn {
+    background-color: #444;
+    color: #e0e0e0;
+}
+
+body.dark-mode #help-btn:hover,
+body.dark-mode #settings-btn:hover {
+    background-color: #555;
+}
+
+body.dark-mode #edit-mode-btn {
+    color: #e0e0e0;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode #edit-mode-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .zoom-btn {
+    background: #333;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+body.dark-mode .zoom-btn:hover {
+    background: #444;
+}
+
+body.dark-mode #dashboard-header {
+    filter: brightness(0.7);
+}

@@ -1,0 +1,5 @@
+/* CSS for the WebClip selector */
+.webclip-highlight-overlay {
+  /* Styles are mostly inline in content.js, but we can add transitions here if we want */
+  transition: all 0.1s ease;
+}

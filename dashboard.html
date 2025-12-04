@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebClip Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+    <div id="dashboard-header">
+        <div class="header-content">
+            <h1 id="dashboard-title" contenteditable="true">WebClip Dashboard</h1>
+            <div class="header-controls">
+                <div id="cover-options" style="display: none;">
+                    <button id="upload-cover-btn">Upload Image</button>
+                    <div class="preset-swatch" data-bg="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                    <div class="preset-swatch" data-bg="linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)"
+                        style="background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);"></div>
+                    <div class="preset-swatch" data-bg="linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)"
+                        style="background: linear-gradient(120deg, #fccb90 0%, #d57eeb 100%);"></div>
+                    <div class="preset-swatch" data-bg="linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%)"
+                        style="background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);"></div>
+                </div>
+                <button id="change-cover-btn">Change Cover</button>
+                <input type="file" id="banner-upload" accept="image/*" style="display: none;">
+                <button id="edit-mode-btn">Edit</button>
+            </div>
+        </div>
+    </div>
+    <div id="dashboard-container">
+        <!-- Widgets will be injected here -->
+    </div>
+    <button id="help-btn" title="Help">?</button>
+    <button id="settings-btn" title="Settings">⚙️</button>
+
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Dashboard Help</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li><strong>Add Widgets:</strong> Open any page, click extension icon, select "Start Selection".
+                    </li>
+                    <li><strong>Edit Mode:</strong> Click "Edit Layout" to enable moving and resizing.</li>
+                    <li><strong>Move:</strong> Drag the widget header.</li>
+                    <li><strong>Resize:</strong> Drag the bottom-right corner (snaps to 10px).</li>
+                    <li><strong>Zoom:</strong> Use <strong>+ / -</strong> buttons on the widget.</li>
+                    <li><strong>Undo:</strong> Press <strong>Ctrl + Z</strong> (or Cmd + Z) to undo actions (max 5
+                        steps).</li>
+                    <li><strong>Bring to Front:</strong> Click any widget to bring it to the top.</li>
+                    <li><strong>Delete:</strong> Click the <strong>&times;</strong> button on the widget header.</li>
+                    <li><strong>Invert:</strong> Click the <strong>◑</strong> button to toggle dark mode for a widget.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                    <span>Dark Mode</span>
+                    <input type="checkbox" id="settings-dark-mode-toggle">
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                    <span>Auto Refresh</span>
+                    <select id="refresh-rate-select" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                        <option value="0">Never</option>
+                        <option value="1">Every 1 Minute</option>
+                        <option value="5">Every 5 Minutes</option>
+                        <option value="30">Every 30 Minutes</option>
+                    </select>
+                </div>
+                <div
+                    style="display: flex; align-items: center; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
+                    <span>Clear All Widgets</span>
+                    <button id="clear-all-btn"
+                        style="width: auto; padding: 5px 15px; background-color: #ff4444; color: white; font-size: 13px;">Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+
+</html>
